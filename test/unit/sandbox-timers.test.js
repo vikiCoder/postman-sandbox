@@ -316,13 +316,11 @@
 
             setTimeout(function () {
                 expect(execution.return.async).to.be(true);
-                expect(result).to.eql({
-                    name: 'postman-sb-test',
-                    skipped: false,
-                    passed: true,
-                    error: null,
-                    index: 0
-                });
+                expect(result).to.have.property('name', 'postman-sb-test');
+                expect(result).to.have.property('skipped', false);
+                expect(result).to.have.property('passed', true);
+                expect(result).to.have.property('error', null);
+                expect(result).to.have.property('index', 0);
                 done();
             }, 500);
         });

@@ -29,4 +29,29 @@ describe('sandbox assertion events', function () {
                 });
         });
     });
+
+    it('must set flag for async tests', function (done) {
+        Sandbox.createContext(function (err, ctx) {
+            if (err) { return done(err); }
+
+            ctx.on('execution.assertion', function (cursor, result) {
+                // @todo write tests
+            });
+
+            ctx.execute(`
+                pm.test("pass1", function (done) {
+                    setTimeout(function () {
+                        done()
+                    }, 1000);
+                });
+
+                pm.test("pass2", function () {
+                    pm.expect(123).be.a(Number);
+                });
+            `, {id: 'my-execution-id'}, function (err) {
+                    if (err) { return done(err); }
+                    done();
+                });
+        });
+    });
 });
